@@ -180,7 +180,7 @@ test("An attack hit send to [2,9]", () => {
   expect(theGrid[2][8].getTBH).toBe(1);
 });
 
-test("The misses are record correctly", () => { 
+test("The misses are record correctly", () => {
   let theGrid = theGameboard.getGrid;
   expect(theGrid[3][6]).toBe("M");
   expect(theGrid[6][9]).toBe("M");
@@ -190,10 +190,10 @@ test("The misses are record correctly", () => {
 
 //Tests to check for sunken ships
 test("Sink the ship 5", () => {
-  theGameboard.receiveAttack(3,1);
-  theGameboard.receiveAttack(4,1);
-  theGameboard.receiveAttack(5,1);
-  expect(theGameboard.receiveAttack(6,1)).toBe("You sunk a ship of 4 spaces");
+  theGameboard.receiveAttack(3, 1);
+  theGameboard.receiveAttack(4, 1);
+  theGameboard.receiveAttack(5, 1);
+  expect(theGameboard.receiveAttack(6, 1)).toBe("You sunk a ship of 4 spaces");
   let theGrid = theGameboard.getGrid;
   expect(theGrid[3][1]).toBe("A");
   expect(theGrid[4][1]).toBe("A");
@@ -202,9 +202,9 @@ test("Sink the ship 5", () => {
 });
 
 test("Sink the ship 3", () => {
-  theGameboard.receiveAttack(5,5);
-  theGameboard.receiveAttack(5,4);
-  expect(theGameboard.receiveAttack(5,3)).toBe("You sunk a ship of 3 spaces");
+  theGameboard.receiveAttack(5, 5);
+  theGameboard.receiveAttack(5, 4);
+  expect(theGameboard.receiveAttack(5, 3)).toBe("You sunk a ship of 3 spaces");
   let theGrid = theGameboard.getGrid;
   expect(theGrid[5][5]).toBe("A");
   expect(theGrid[5][4]).toBe("A");
@@ -212,7 +212,7 @@ test("Sink the ship 3", () => {
 });
 
 test("All the ships have been sunk", () => {
-  theGameboard.receiveAttack(3,3);
-  theGameboard.receiveAttack(2,8);
-  expect(theGameboard.receiveAttack(2,7)).toBe("All the ships have been sunk");
+  theGameboard.receiveAttack(3, 3);
+  theGameboard.receiveAttack(2, 8);
+  expect(theGameboard.receiveAttack(2, 7)).toBe("All the ships have been sunk");
 });
