@@ -1,5 +1,6 @@
 class Gameboard {
   #theGrid;
+  #totalShips;
 
   constructor() {
     this.#theGrid = [];
@@ -9,6 +10,7 @@ class Gameboard {
         this.#theGrid[i][j] = 0;
       }
     }
+    this.#totalShips = 0;
   }
 
   get getGrid() {
@@ -19,7 +21,15 @@ class Gameboard {
     let s = theShip;
     let x = 0;
     let y = 0;
-    if(coordinateStart[0] !== coordinateFinish[0] && coordinateStart[1] !== coordinateFinish[1] || coordinateStart[0] < 0 || coordinateStart[1] < 0 || coordinateFinish[0] < 0 || coordinateFinish[1] < 0) {
+    let first = true;
+    if (
+      (coordinateStart[0] !== coordinateFinish[0] &&
+        coordinateStart[1] !== coordinateFinish[1]) ||
+      coordinateStart[0] < 0 ||
+      coordinateStart[1] < 0 ||
+      coordinateFinish[0] < 0 ||
+      coordinateFinish[1] < 0
+    ) {
       throw new Error("Oh no");
     }
     if (coordinateStart[0] === coordinateFinish[0]) {
@@ -32,13 +42,19 @@ class Gameboard {
         }
         y = coordinateStart[1];
         while (y >= coordinateFinish[1]) {
-          if(this.#theGrid[coordinateStart[0]][y] !== 0) {
-            this.#anotherShipExists(coordinateStart, [coordinateStart[0], y + 1]);
+          if (this.#theGrid[coordinateStart[0]][y] !== 0) {
+            this.#anotherShipExists(
+              coordinateStart,
+              [coordinateStart[0], y + 1],
+              first,
+            );
             return;
           }
           this.#theGrid[coordinateStart[0]][y] = s;
           y -= 1;
+          first = false;
         }
+        this.#totalShips += 1;
       } else {
         if (
           coordinateFinish[1] - coordinateStart[1] + 1 < s.getLength ||
@@ -48,13 +64,19 @@ class Gameboard {
         }
         y = coordinateStart[1];
         while (y <= coordinateFinish[1]) {
-          if(this.#theGrid[coordinateStart[0]][y] !== 0) {
-            this.#anotherShipExists(coordinateStart, [coordinateStart[0], y - 1]);
+          if (this.#theGrid[coordinateStart[0]][y] !== 0) {
+            this.#anotherShipExists(
+              coordinateStart,
+              [coordinateStart[0], y - 1],
+              first,
+            );
             return;
           }
           this.#theGrid[coordinateStart[0]][y] = s;
           y += 1;
+          first = false;
         }
+        this.#totalShips += 1;
       }
     } else {
       if (coordinateStart[0] > coordinateFinish[0]) {
@@ -66,13 +88,19 @@ class Gameboard {
         }
         x = coordinateStart[0];
         while (x >= coordinateFinish[0]) {
-          if(this.#theGrid[x][coordinateFinish[1]] !== 0) {
-            this.#anotherShipExists(coordinateStart, [x + 1, coordinateFinish[1]]);
+          if (this.#theGrid[x][coordinateFinish[1]] !== 0) {
+            this.#anotherShipExists(
+              coordinateStart,
+              [x + 1, coordinateFinish[1]],
+              first,
+            );
             return;
           }
           this.#theGrid[x][coordinateFinish[1]] = s;
           x -= 1;
+          first = false;
         }
+        this.#totalShips += 1;
       } else {
         if (
           coordinateFinish[0] - coordinateStart[0] + 1 < s.getLength ||
@@ -82,59 +110,87 @@ class Gameboard {
         }
         x = coordinateStart[0];
         while (x <= coordinateFinish[0]) {
-          if(this.#theGrid[x][coordinateFinish[1]] !== 0) {
-            this.#anotherShipExists(coordinateStart, [x - 1, coordinateFinish[1]]);
+          if (this.#theGrid[x][coordinateFinish[1]] !== 0) {
+            this.#anotherShipExists(
+              coordinateStart,
+              [x - 1, coordinateFinish[1]],
+              first,
+            );
             return;
           }
           this.#theGrid[x][coordinateFinish[1]] = s;
           x += 1;
+          first = false;
         }
+          this.#totalShips += 1;
       }
     }
   }
 
-
-
-
-
-
-
-  #anotherShipExists(origin, actual) {
-    console.log(origin);
-    console.log(actual);
-    let x = 0;
-    let y = 0;
-    if (origin[0] === actual[0]) {
-      if (origin[1] > actual[1]) {
-        y = actual[1];
-        while (y <= origin[1]) {
-          this.#theGrid[origin[0]][y] = 0;
-          y += 1;
+  #anotherShipExists(origin, actual, firstMove) {
+    if (firstMove === false) {
+      let x = 0;
+      let y = 0;
+      if (origin[0] === actual[0]) {
+        if (origin[1] > actual[1]) {
+          y = actual[1];
+          while (y <= origin[1]) {
+            this.#theGrid[origin[0]][y] = 0;
+            y += 1;
+          }
+        } else {
+          y = origin[1];
+          while (y <= actual[1]) {
+            this.#theGrid[origin[0]][y] = 0;
+            y += 1;
+          }
         }
       } else {
-        y = origin[1];
-        while (y <= actual[1]) {
-          this.#theGrid[origin[0]][y] = 0;
-          y += 1;
+        if (actual[0] > origin[0]) {
+          x = actual[0];
+          while (x <= origin[0]) {
+            this.#theGrid[x][origin[1]] = 0;
+            x += 1;
+          }
+        } else {
+          x = origin[0];
+          while (x <= actual[0]) {
+            this.#theGrid[x][origin[1]] = 0;
+            x += 1;
+          }
         }
       }
+      throw new Error("Oh no");
     } else {
-      if (actual[0] > origin[0]) {
-        x = actual[0];
-        while (x <= origin[0]) {
-          this.#theGrid[x][origin[1]] = 0;
-          x += 1;
-        }
-      } else {
-        x = origin[0];
-        while (x <= actual[0]) {
-          this.#theGrid[x][origin[1]] = 0;
-          x += 1;
-        }
-      }
+      throw new Error("Oh no");
     }
-    throw new Error ("Oh no");
   }
+
+  receiveAttack (coordinateX, coordinateY) {
+    if(this.#theGrid[coordinateX][coordinateY] === 0) {
+      this.#theGrid[coordinateX][coordinateY] = "M";
+      return "You miss"
+    } else if (this.#theGrid[coordinateX][coordinateY] === "M" || this.#theGrid[coordinateX][coordinateY] === "A") {
+      return "You already hit in here";
+    } else {
+      let theShip = this.#theGrid[coordinateX][coordinateY];
+      this.#theGrid[coordinateX][coordinateY] = "A";
+      theShip.hit();
+      if(theShip.getSunk === true) {
+        this.#totalShips -= 1;
+        if(this.#totalShips === 0) {
+          return `All the ships have been sunk`;
+        } else {
+          return `You sunk a ship of ${theShip.getLength} spaces`;
+        }
+
+      }
+      return "You hit a ship!";
+    }
+  }
+
 }
+
+
 
 export { Gameboard };
