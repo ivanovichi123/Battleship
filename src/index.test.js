@@ -1,10 +1,12 @@
 import { Ship } from "./ship";
 import { Gameboard } from "./gameboard";
 
+//Variables to check
 const theShip1 = new Ship(3, 0, false);
 const theShip2 = new Ship(2, 0, false);
 const theGameboard = new Gameboard();
 
+//Test for the ship class
 test("The ship 1 receives a hit", () => {
   theShip1.hit();
   expect(theShip1.getTBH).toBe(1);
@@ -26,11 +28,13 @@ test("The ship 2 is sunk", () => {
   expect(theShip2.getSunk).toBe(true);
 });
 
+//Create new ships
 const theShip3 = new Ship(3, 0, false);
 const theShip4 = new Ship(2, 0, false);
 const theShip5 = new Ship(4, 0, false);
 const theShip6 = new Ship(3, 0, false);
 
+//Tests to check the gameboard placeShip function
 test("The Ship 3 in coordinate start [5,5] and final [5,3]", () => {
   theGameboard.placeShip(theShip3, [5, 5], [5, 3]);
   let theGrid = theGameboard.getGrid;
@@ -137,6 +141,7 @@ test("The Ship 6 in coordinate start [2,7] and final [2,9]", () => {
   expect(theGrid[2][9].getLength).toBe(3);
 });
 
+//Test for the gameboard function of receiveAttack
 test("An attack miss send to [6,9]", () => {
   expect(theGameboard.receiveAttack(6, 9)).toBe("You miss");
   let theGrid = theGameboard.getGrid;
@@ -183,7 +188,7 @@ test("The misses are record correctly", () => {
   expect(theGrid[8][3]).toBe("M");
 });
 
-//TEST FOR SUNKEN SHIPS
+//Tests to check for sunken ships
 test("Sink the ship 5", () => {
   theGameboard.receiveAttack(3,1);
   theGameboard.receiveAttack(4,1);
