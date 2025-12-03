@@ -1,3 +1,5 @@
+import { Ship } from "./ship";
+
 //Create the class for the gameboard that will store the ships
 class Gameboard {
   #theGrid; //The grid that has the position fo the ships
@@ -44,10 +46,10 @@ class Gameboard {
       coordinateStart[1] < 0 ||
       coordinateFinish[0] < 0 ||
       coordinateFinish[1] < 0 ||
-      coordinateStart[0] > 10 ||
-      coordinateStart[1] > 10 ||
-      coordinateFinish[0] > 10 ||
-      coordinateFinish[1] > 10
+      coordinateStart[0] > 9 ||
+      coordinateStart[1] > 9 ||
+      coordinateFinish[0] > 9 ||
+      coordinateFinish[1] > 9
     ) {
       //Throw an error
       throw new Error("Oh no");
@@ -269,22 +271,32 @@ class Gameboard {
 
   //Function that receives two coordinates and establish if it was a hit or a miss
   receiveAttack(coordinateX, coordinateY) {
+    if (
+      coordinateX > 9 ||
+      coordinateY > 9 ||
+      coordinateX < 0 ||
+      coordinateY < 0
+    ) {
+      return "That space does not exist";
+    }
     //Check if the coordinate is a zero
     if (this.#theGrid[coordinateX][coordinateY] === 0) {
       //Set the place as a miss
       this.#theGrid[coordinateX][coordinateY] = "M";
-      return "You miss";
+      console.log("You miss");
+      return "M";
 
       //Check if the coordinate already has a letter
     } else if (
       this.#theGrid[coordinateX][coordinateY] === "M" ||
       this.#theGrid[coordinateX][coordinateY] === "A"
     ) {
+      console.log("You already hit here");
       return "You already hit in here";
 
       //The coordinate has a ship
     } else {
-      //Make anew variable that is equal to the ship in the coordinate
+      //Make a new variable that is equal to the ship in the coordinate
       let theShip = this.#theGrid[coordinateX][coordinateY];
       //Change the value of the coordinate as "A", meaning there was a hit
       this.#theGrid[coordinateX][coordinateY] = "A";
@@ -298,13 +310,16 @@ class Gameboard {
         //Check if the total of ships is zero
         if (this.#totalShips === 0) {
           //All the ships has been sunk
+          console.log("All ships have been sunk");
           return `All the ships have been sunk`;
         } else {
           //Only one ship was sunk
-          return `You sunk a ship of ${theShip.getLength} spaces`;
+          console.log("You sunk a ship");
+          return theShip.getLength;
         }
       }
-      return "You hit a ship!";
+      console.log("You hit a ship of ", theShip.getLength);
+      return "A";
     }
   }
 }
