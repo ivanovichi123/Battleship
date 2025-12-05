@@ -42,6 +42,11 @@ class Ship {
       this.#sunk = true;
     }
   }
+
+  restart() {
+    this.#sunk = false;
+    this.#timesBeenHit = 0;
+  }
 }
 
 export { Ship };
