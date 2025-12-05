@@ -52,7 +52,7 @@ class Gameboard {
       coordinateFinish[1] > 9
     ) {
       //Throw an error
-      throw new Error("Oh no");
+      return "Error";
     }
 
     //Check if the coordinate "x" is the same in the start and finish, meaning the ship is place vertically
@@ -65,7 +65,7 @@ class Gameboard {
           coordinateStart[1] - coordinateFinish[1] + 1 > s.getLength
         ) {
           //Throw an error
-          throw new Error("Oh no");
+          return "Error";
         }
 
         //The value of the coordinate "y" is at the start
@@ -80,7 +80,7 @@ class Gameboard {
               [coordinateStart[0], y + 1],
               first,
             );
-            return;
+            return "Error";
           }
           //Put the variable of the ship in the coordinate that correspond to it
           this.#theGrid[coordinateStart[0]][y] = s;
@@ -98,7 +98,7 @@ class Gameboard {
           coordinateFinish[1] - coordinateStart[1] + 1 > s.getLength
         ) {
           //Throw an error
-          throw new Error("Oh no");
+          return "Error";
         }
 
         //The value of the coordinate "y" is at the start
@@ -113,7 +113,7 @@ class Gameboard {
               [coordinateStart[0], y - 1],
               first,
             );
-            return;
+            return "Error";
           }
           //Put the variable of the ship in the coordinate that correspond to it
           this.#theGrid[coordinateStart[0]][y] = s;
@@ -134,7 +134,7 @@ class Gameboard {
           coordinateStart[0] - coordinateFinish[0] + 1 > s.getLength
         ) {
           //Throw an error
-          throw new Error("Oh no");
+          return "Error";
         }
 
         //The value of the coordinate "x" is at the start
@@ -149,7 +149,7 @@ class Gameboard {
               [x + 1, coordinateFinish[1]],
               first,
             );
-            return;
+            return "Error";
           }
           //Put the variable of the ship in the coordinate that correspond to it
           this.#theGrid[x][coordinateFinish[1]] = s;
@@ -167,7 +167,7 @@ class Gameboard {
           coordinateFinish[0] - coordinateStart[0] + 1 > s.getLength
         ) {
           //Throw an error
-          throw new Error("Oh no");
+          return "Error";
         }
 
         //The value of the coordinate "x" is at the start
@@ -182,7 +182,7 @@ class Gameboard {
               [x - 1, coordinateFinish[1]],
               first,
             );
-            return;
+            return "Error";
           }
           //Put the variable of the ship in the coordinate that correspond to it
           this.#theGrid[x][coordinateFinish[1]] = s;
@@ -260,12 +260,12 @@ class Gameboard {
         }
       }
       //Throw an error
-      throw new Error("Oh no");
+      return "Error";
 
       //If the function was trigger in the first loop of while
     } else {
       //Throw an error
-      throw new Error("Oh no");
+      return "Error";
     }
   }
 
@@ -283,7 +283,6 @@ class Gameboard {
     if (this.#theGrid[coordinateX][coordinateY] === 0) {
       //Set the place as a miss
       this.#theGrid[coordinateX][coordinateY] = "M";
-      console.log("You miss");
       return "M";
 
       //Check if the coordinate already has a letter
@@ -291,7 +290,6 @@ class Gameboard {
       this.#theGrid[coordinateX][coordinateY] === "M" ||
       this.#theGrid[coordinateX][coordinateY] === "A"
     ) {
-      console.log("You already hit here");
       return "You already hit in here";
 
       //The coordinate has a ship
@@ -310,18 +308,25 @@ class Gameboard {
         //Check if the total of ships is zero
         if (this.#totalShips === 0) {
           //All the ships has been sunk
-          console.log("All ships have been sunk");
           return `All the ships have been sunk`;
         } else {
           //Only one ship was sunk
-          console.log("You sunk a ship");
           return theShip.getLength;
         }
       }
-      console.log("You hit a ship of ", theShip.getLength);
       return "A";
     }
   }
+
+  cleanGameboard() {
+    for (let i = 0; i < 10; i++) {
+      for (let j = 0; j < 10; j++) {
+        this.#theGrid[i][j] = 0;
+      }
+    }
+    this.#totalShips = 0;
+  }
+
 }
 
 export { Gameboard };
