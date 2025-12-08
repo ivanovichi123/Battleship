@@ -43,8 +43,11 @@ class Ship {
     }
   }
 
+  //Function that restarts the ship
   restart() {
+    //Set sunk to false
     this.#sunk = false;
+    //Set times been hit to zero
     this.#timesBeenHit = 0;
   }
 }
