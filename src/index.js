@@ -1,6 +1,6 @@
 import "./style.css";
-import { Ship } from "./ship";
-import { Player } from "./player";
+import { Ship } from "./ship.js";
+import { Player } from "./player.js";
 
 //Function that changes the DOM
 function userInterface() {

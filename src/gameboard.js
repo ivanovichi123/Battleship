@@ -1,4 +1,4 @@
-import { Ship } from "./ship";
+import { Ship } from "./ship.js";
 
 //Create the class for the gameboard that will store the ships
 class Gameboard {
