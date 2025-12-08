@@ -318,15 +318,18 @@ class Gameboard {
     }
   }
 
+  //Functions that resets the gameboard
   cleanGameboard() {
+    //For loop that goes through every space in the grid
     for (let i = 0; i < 10; i++) {
       for (let j = 0; j < 10; j++) {
+        //Set the value to zero
         this.#theGrid[i][j] = 0;
       }
     }
+    //Set the value of total ships to zero
     this.#totalShips = 0;
   }
-
 }
 
 export { Gameboard };
