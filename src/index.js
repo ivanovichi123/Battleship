@@ -4,7 +4,6 @@ import { Player } from "./player";
 
 //Function that changes the DOM
 function userInterface() {
-
   //Function that creates the grids
   const createGrid = (theEvent) => {
     //Select the space for the grid of the ships of the player
@@ -336,9 +335,8 @@ function theGame() {
           goodCoordinates[0],
           goodCoordinates[1],
         );
-      //Repeat the loop if there was an error
+        //Repeat the loop if there was an error
       } while (checkErrors === "Error");
-
 
       console.log(
         `Start coordinate for ${computerShipsList[i].getLength}`,
@@ -372,24 +370,24 @@ function theGame() {
       //Change the event message
       changeEvent.textContent = "The " + theActivePlayer + " miss";
       return "a";
-    
-    //Check if the attack hit a ship
+
+      //Check if the attack hit a ship
     } else if (whatHappen === "A") {
       //Call the interface to change the square of the grid
       theInterface.putAttack(theId, "A");
       //Change the event message
       changeEvent.textContent = "The " + theActivePlayer + " hit a ship";
       return "a";
-    
-    //Check if the attack sunk a ship
+
+      //Check if the attack sunk a ship
     } else if (typeof whatHappen === "number") {
       //Call the interface to change the square of the grid
       theInterface.putAttack(theId, "A");
       //Change the event message
       changeEvent.textContent = "You sunk a ship!!";
       return "a";
-    
-    //If all the if`s are false, that means all the ships were sunk
+
+      //If all the if`s are false, that means all the ships were sunk
     } else {
       //Call the interface to change the square of the grid
       theInterface.putAttack(theId, "A");
@@ -417,7 +415,7 @@ function theGame() {
         //Return, the first value is if the coordinate was already use, and the second one if the computer has not win
         return [false, true];
 
-      //Check if the attack hit a ship
+        //Check if the attack hit a ship
       } else if (whatHappen === "A") {
         //Call the interface to render the attack
         theInterface.putAttack(`[${coordinateX},${coordinateY}]`, "A");
@@ -432,7 +430,7 @@ function theGame() {
         //Return, the first value is if the coordinate was already use, and the second one if the computer has not win
         return [false, true];
 
-      //Check if the attack sunk a ship
+        //Check if the attack sunk a ship
       } else if (typeof whatHappen === "number") {
         //Call the interface to render the attack
         theInterface.putAttack(`[${coordinateX},${coordinateY}]`, "A");
@@ -441,7 +439,7 @@ function theGame() {
         //Return, the first value is if the coordinate was already use, and the second one if the computer has not win
         return [false, true];
 
-      //Check if the computer win
+        //Check if the computer win
       } else {
         //Call the interface to render the attack
         theInterface.putAttack(`[${coordinateX},${coordinateY}]`, "A");
@@ -493,7 +491,7 @@ function theGame() {
       startCoordinate[0] + (length - 1),
       startCoordinate[1],
     ];
-    
+
     let leftCoordinate = [
       startCoordinate[0] - (length - 1),
       startCoordinate[1],
@@ -590,7 +588,7 @@ function gameController() {
     //If the active player is the human change it to the computer
     if (activePlayer.theName === players[0].theName) {
       activePlayer = players[1];
-    //If the active player is the computer change it to the human
+      //If the active player is the computer change it to the human
     } else {
       activePlayer = players[0];
     }
@@ -616,7 +614,7 @@ function gameController() {
         return;
       }
 
-      //Select the text 
+      //Select the text
       let theText = document.getElementById("theText");
       //Change the text to establish the active player
       theText.textContent = "It is the turn of the Human";
@@ -633,9 +631,9 @@ function gameController() {
     if (activeGame === true || theRestart === false) {
       //Establish the restart as true
       theRestart = true;
-      //Reset the grids 
+      //Reset the grids
       theActualGame.cleanGrids(theInterface);
-      //The game is not active 
+      //The game is not active
       activeGame = false;
       //Select the event text
       let theEvent = document.getElementById("theEvents");
