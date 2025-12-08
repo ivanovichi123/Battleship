@@ -337,15 +337,6 @@ function theGame() {
         );
         //Repeat the loop if there was an error
       } while (checkErrors === "Error");
-
-      console.log(
-        `Start coordinate for ${computerShipsList[i].getLength}`,
-        goodCoordinates[0],
-      );
-      console.log(
-        `Finish coordinate for ${computerShipsList[i].getLength}`,
-        goodCoordinates[1],
-      );
     }
     return false;
   };
